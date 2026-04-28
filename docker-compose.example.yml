@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mssql-mcp-server:
+    build: .
+    environment:
+      - MSSQL_SERVER=sqlserver  # Use service name for internal Docker network
+      - MSSQL_DATABASE=TestDB
+      - MSSQL_USER=sa
+      - MSSQL_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PORT=1433
+      - MSSQL_ENCRYPT=false
+    depends_on:
+      - sqlserver
+    stdin_open: true
+    tty: true
+
+  # Example SQL Server for testing
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data:

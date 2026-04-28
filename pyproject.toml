@@ -1,0 +1,38 @@
+[project]
+name = "microsoft_sql_server_mcp"
+version = "0.1.0"
+description = "A Model Context Protocol (MCP) server that enables secure interaction with Microsoft SQL Server databases."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "Richard Han", email = "noreply@example.com"}
+]
+license = {text = "MIT"}
+keywords = ["mcp", "mssql", "sql-server", "database", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "mcp>=1.0.0",
+    "pymssql>=2.2.8",
+]
+
+[tool.mcp]
+system_dependencies.darwin = ["freetds"]
+system_dependencies.linux = ["freetds-dev"]
+system_dependencies.win32 = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+mssql_mcp_server = "mssql_mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mssql_mcp_server"]
